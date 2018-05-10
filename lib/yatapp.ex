@@ -1,18 +1,5 @@
 defmodule Yatapp do
   @moduledoc """
-  Documentation for Yatapp.
+  Yata integration hex package.
   """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Yatapp.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end

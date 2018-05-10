@@ -3,6 +3,7 @@ defmodule Mix.Tasks.DownloadTranslations do
 
   @shortdoc "Downloads all translations from yatapp.net"
   def run(_) do
-    Yatapp.Translations.download()
+    Mix.Task.run "app.start"
+    Yatapp.TranslationsDownloader.download()
   end
 end
