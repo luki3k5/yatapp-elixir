@@ -56,6 +56,22 @@ defmodule Yatapp.SocketClient do
     {:ok, state}
   end
 
+  def handle_message(_topic, "new_translation", %{"key" => key, "values" => values}, _transport, state) do
+    add_new_keys_to_ets(key, values)
+    {:ok, state}
+  end
+
+  def handle_message(_topic, "updated_translation", %{"old_key" => old_key, "new_key" => new_key, "values" => new_values}, _transport, state) do
+    update_keys(old_key, new_key, new_values)
+    {:ok, state}
+  end
+
+  def handle_message(_topic, "deleted_translation", %{"key" => key}, _transport, state) do
+    remove_translation(key)
+    Logger.info("translation deleted: key => #{key}")
+    {:ok, state}
+  end
+
   def handle_message(topic, event, payload, _transport, state) do
     Logger.warn("message on topic #{topic}: #{event} #{inspect(payload)}")
     {:ok, state}
@@ -103,10 +119,10 @@ defmodule Yatapp.SocketClient do
   end
 
   def handle_call({:get_translation, locale, key}, _from, state) do
-    new_key = Enum.join([locale, key], ".")
+    new_key = locale_key(locale, key)
     translation =
       case :ets.lookup(@table, new_key) do
-        [{^locale, ^key, translation}] -> translation
+        [{_, translation}] -> translation
         [] -> []
       end
 
@@ -120,26 +136,54 @@ defmodule Yatapp.SocketClient do
   defp load_translations() do
     Enum.each(Env.get(:locales), fn locale ->
       Yatapp.TranslationsDownloader.ets_download(locale)
-      |> create_translations(locale)
+      |> create_translations()
     end)
   end
 
-  defp create_translations(map, locale) do
+  defp create_translations(map) do
     Enum.map(map, fn {key, value} ->
-      create_translation(key, value, locale)
+      create_translation(key, value)
     end)
   end
 
-  defp create_translation(key, value, locale)
+  defp create_translation(key, value)
        when is_map(value) do
     Enum.map(value, fn {k, v} ->
       key = Enum.join([key, k], ".")
-      create_translation(key, v, locale)
+      create_translation(key, v)
     end)
   end
 
-  defp create_translation(key, value, locale) do
-    key = Enum.join([locale, key], ".")
+  defp create_translation(key, value) do
     :ets.insert(@table, {key, value})
+  end
+
+  defp add_new_keys_to_ets(key, values) do
+    Enum.each(values, fn %{"lang" => lang, "text" => text} ->
+      locale_key(lang, key) |> create_translation(text)
+      Logger.info("new translation added: #{lang} => #{key}: #{text}")
+    end)
+  end
+
+  defp update_keys(old_key, new_key, new_values) do
+    Enum.each(new_values, fn %{"lang" => lang, "text" => text} ->
+     case old_key == new_key do
+        true ->
+          locale_key(lang, new_key) |> create_translation(text)
+          Logger.info("updated translation: #{lang} => #{new_key}: #{text}")
+        false ->
+          locale_key(lang, old_key) |> remove_translation()
+          locale_key(lang, new_key) |> create_translation(text)
+          Logger.info("updated translation: #{lang} => #{new_key}: #{text}")
+     end
+    end)
+  end
+
+  defp locale_key(locale, key) do
+    Enum.join([locale, key], ".")
+  end
+
+  defp remove_translation(key) do
+    :ets.take(@table, key)
   end
 end
