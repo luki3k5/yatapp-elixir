@@ -52,7 +52,8 @@ defmodule Yatapp.TranslationsDownloader do
   end
 
   defp save_file(lang) do
-    {:ok, {{_, 200, 'OK'}, _headers, body}} = get_response(lang, Env.get(:translations_format), Env.get(:root))
+    {:ok, {{_, 200, 'OK'}, _headers, body}} =
+      get_response(lang, Env.get(:translations_format), Env.get(:root))
 
     unless File.exists?(Env.get(:save_to_path)) do
       File.mkdir(Env.get(:save_to_path))

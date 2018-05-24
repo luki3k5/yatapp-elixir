@@ -67,6 +67,7 @@ defmodule Yatapp.ExI18n do
 
   defp get_translation(locale, key) do
     locale_key = Enum.join([locale, key], ".")
+
     case :ets.lookup(@table, locale_key) do
       [{^locale_key, translation}] -> translation
       [] -> []

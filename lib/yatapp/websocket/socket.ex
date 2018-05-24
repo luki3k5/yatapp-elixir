@@ -56,12 +56,24 @@ defmodule Yatapp.SocketClient do
     {:ok, state}
   end
 
-  def handle_message(_topic, "new_translation", %{"key" => key, "values" => values}, _transport, state) do
+  def handle_message(
+        _topic,
+        "new_translation",
+        %{"key" => key, "values" => values},
+        _transport,
+        state
+      ) do
     add_new_keys_to_ets(key, values)
     {:ok, state}
   end
 
-  def handle_message(_topic, "updated_translation", %{"old_key" => old_key, "new_key" => new_key, "values" => new_values}, _transport, state) do
+  def handle_message(
+        _topic,
+        "updated_translation",
+        %{"old_key" => old_key, "new_key" => new_key, "values" => new_values},
+        _transport,
+        state
+      ) do
     update_keys(old_key, new_key, new_values)
     {:ok, state}
   end
@@ -120,6 +132,7 @@ defmodule Yatapp.SocketClient do
 
   def handle_call({:get_translation, locale, key}, _from, state) do
     new_key = locale_key(locale, key)
+
     translation =
       case :ets.lookup(@table, new_key) do
         [{_, translation}] -> translation
@@ -167,15 +180,16 @@ defmodule Yatapp.SocketClient do
 
   defp update_keys(old_key, new_key, new_values) do
     Enum.each(new_values, fn %{"lang" => lang, "text" => text} ->
-     case old_key == new_key do
+      case old_key == new_key do
         true ->
           locale_key(lang, new_key) |> create_translation(text)
           Logger.info("updated translation: #{lang} => #{new_key}: #{text}")
+
         false ->
           locale_key(lang, old_key) |> remove_translation()
           locale_key(lang, new_key) |> create_translation(text)
           Logger.info("updated translation: #{lang} => #{new_key}: #{text}")
-     end
+      end
     end)
   end
 
