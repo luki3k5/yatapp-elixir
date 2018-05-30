@@ -6,8 +6,7 @@ defmodule Yatapp.TranslationsDownloader do
 
   @api_version "v1"
   @api_end_point_url "/api/:api_version/project/:project_id/:lang/:format"
-  # @api_base_url "http://api.yatapp.net"
-  @api_base_url "http://localhost:4000"
+  @api_base_url "http://api.yatapp.net"
 
   @doc """
   Downloads all translations and saves all locales.

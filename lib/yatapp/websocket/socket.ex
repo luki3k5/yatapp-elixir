@@ -7,12 +7,13 @@ defmodule Yatapp.SocketClient do
 
   @behaviour GenSocketClient
   @table :exi18n_translations
+  @socket_url "http://yatapp.net/socket/websocket"
 
   def start_link() do
     GenSocketClient.start_link(
       __MODULE__,
       Phoenix.Channels.GenSocketClient.Transport.WebSocketClient,
-      "ws://8b43a2ac.ngrok.io/socket/websocket"
+      @socket_url
     )
   end
 
@@ -38,7 +39,6 @@ defmodule Yatapp.SocketClient do
     load_translations()
 
     if state.first_join do
-      # :timer.send_interval(:timer.seconds(1), self(), :ping_server)
       {:ok, %{state | first_join: false, ping_ref: 1}}
     else
       {:ok, %{state | ping_ref: 1}}
@@ -89,11 +89,6 @@ defmodule Yatapp.SocketClient do
     {:ok, state}
   end
 
-  def handle_reply("ping", _ref, %{"status" => "ok"} = payload, _transport, state) do
-    Logger.info("server pong ##{payload["response"]["ping_ref"]}")
-    {:ok, state}
-  end
-
   def handle_reply(topic, _ref, payload, _transport, state) do
     Logger.warn("reply on topic #{topic}: #{inspect(payload)}")
     {:ok, state}
@@ -117,12 +112,6 @@ defmodule Yatapp.SocketClient do
     end
 
     {:ok, state}
-  end
-
-  def handle_info(:ping_server, transport, state) do
-    Logger.info("sending ping ##{state.ping_ref}")
-    GenSocketClient.push(transport, "ping", "ping", %{ping_ref: state.ping_ref})
-    {:ok, %{state | ping_ref: state.ping_ref + 1}}
   end
 
   def handle_info(message, _transport, state) do

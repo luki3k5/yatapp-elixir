@@ -22,15 +22,15 @@ defmodule Yatapp.ExI18n do
     - `key`: `String` with path to translation.
     - `values`: `Map` with values that will be interpolated.
   ## Examples
-      iex> ExI18n.t("en", "hello")
+      iex> Yatapp.ExI18n.t("en", "hello")
       "Hello world"
-      iex> ExI18n.t("en", "hello_name", name: "Joe")
+      iex> Yatapp.ExI18n.t("en", "hello_name", name: "Joe")
       "Hello Joe"
-      iex> ExI18n.t("en", "invalid")
+      iex> Yatapp.ExI18n.t("en", "invalid")
       ** (ArgumentError) Missing translation for key: invalid
-      iex> ExI18n.t("en", "incomplete.path")
+      iex> Yatapp.ExI18n.t("en", "incomplete.path")
       ** (ArgumentError) incomplete.path is incomplete path to translation.
-      iex> ExI18n.t("en", "hello_name", name: %{"1" => "2"})
+      iex> Yatapp.ExI18n.t("en", "hello_name", name: %{"1" => "2"})
       ** (ArgumentError) Only string, boolean or number allowed for values.
   """
   @spec t(String.t(), String.t(), Map.t()) :: String.t()

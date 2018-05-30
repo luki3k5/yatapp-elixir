@@ -13,11 +13,11 @@ defmodule Yatapp.ExI18n.Compiler do
     - `text`: `String` or `List` of strings to compile.
     - `values`: `Map` of values.
   ## Examples
-      iex> ExI18n.Compiler.compile("hello %{test}", %{"test" => "world"})
+      iex> Yatapp.ExI18n.Compiler.compile("hello %{test}", %{"test" => "world"})
       "hello world"
-      iex> ExI18n.Compiler.compile("hello %{test}", %{})
+      iex> Yatapp.ExI18n.Compiler.compile("hello %{test}", %{})
       "hello %{test}"
-      iex> ExI18n.Compiler.compile(["hello %{test}", "No.%{nr}"], %{"test" => "world", "nr" => 1})
+      iex> Yatapp.ExI18n.Compiler.compile(["hello %{test}", "No.%{nr}"], %{"test" => "world", "nr" => 1})
       ["hello world", "No.1"]
   """
   @spec compile(String.t() | List.t(), Map.t()) :: String.t()
