@@ -7,7 +7,7 @@ defmodule Yatapp.SocketClient do
 
   @behaviour GenSocketClient
   @table :exi18n_translations
-  @socket_url "http://yatapp.net/socket/websocket"
+  @socket_url "ws://yatapp.net/socket/websocket"
 
   def start_link() do
     GenSocketClient.start_link(
@@ -129,6 +129,11 @@ defmodule Yatapp.SocketClient do
       end
 
     {:reply, translation, state}
+  end
+
+  def handle_call(message, _transport, _from, state) do
+    Logger.warn("Unhandled message #{inspect(message)}")
+    {:ok, state}
   end
 
   def get_translation(locale, key) do
