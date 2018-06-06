@@ -68,14 +68,6 @@ defmodule ExI18nTest do
   end
 
   test "t/3 raise error for incomplete path or missing key" do
-    # assert_raise ArgumentError, "incomplete is incomplete path to translation.", fn ->
-    #   Yatapp.ExI18n.t("en", "incomplete")
-    # end
-    #
-    # assert_raise ArgumentError, "incomplete.path is incomplete path to translation.", fn ->
-    #   Yatapp.ExI18n.t("en", "incomplete.path")
-    # end
-
     assert_raise ArgumentError, "Missing translation for key: invalid", fn ->
       Yatapp.ExI18n.t("en", "invalid")
     end
@@ -126,15 +118,3 @@ defmodule ExI18nTest do
     :ets.insert(:exi18n_translations, {key, value})
   end
 end
-
-# Enum.map(en, fn {key,value} ->
-#   case is_map(value) do
-#     true ->
-#       Enum.map(value, fn {k, v} ->
-#         key = Enum.join([key, k], ".")
-#         :ets.insert(:exi18n_translations, {key, value})
-#       end)
-#     false ->
-#       :ets.insert(:exi18n_translations, {key, value})
-#   end
-# end)

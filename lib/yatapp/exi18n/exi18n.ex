@@ -113,8 +113,4 @@ defmodule Yatapp.ExI18n do
   defp compile(nil, key, _) do
     raise ArgumentError, "Missing translation for key: #{key}"
   end
-
-  defp compile(_, key, _) do
-    raise ArgumentError, "#{key} is incomplete path to translation."
-  end
 end
