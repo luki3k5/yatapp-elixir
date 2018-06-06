@@ -4,6 +4,7 @@ defmodule Yatapp do
   """
   alias Yatapp.Env
 
+  @doc false
   def start(_type, _args) do
     case Env.get(:enable_websocket) do
       true ->

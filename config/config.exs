@@ -7,7 +7,8 @@ config :yatapp,
   translations_format: "yml",
   save_to_path: "priv/locales/",
   root: false,
-  enable_websocket: true,
+  enable_websocket: false,
   default_locale: "en",
   var_prefix: "%{",
-  var_suffix: "}"
+  var_suffix: "}",
+  fallback: false

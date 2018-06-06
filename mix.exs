@@ -8,7 +8,24 @@ defmodule Yatapp.MixProject do
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
+
+      # Docs
+      name: "Yatapp",
+      source_url: "https://github.com/LLInformatics/yatapp-elixir",
+      homepage_url: "https://github.com/LLInformatics/yatapp-elixir",
+      description: "Integrate your translations from Yata.",
+      docs: [
+        main: "Yatapp",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -25,7 +42,10 @@ defmodule Yatapp.MixProject do
     [
       {:phoenix_gen_socket_client, "~> 2.1.1"},
       {:websocket_client, "~> 1.2"},
-      {:poison, "~> 2.0"}
+      {:poison, "~> 2.0"},
+      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:inch_ex, "~> 0.5", only: [:dev, :test]},
+      {:excoveralls, "~> 0.8.2"}
     ]
   end
 end
