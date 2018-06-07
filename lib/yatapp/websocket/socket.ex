@@ -1,5 +1,7 @@
 defmodule Yatapp.SocketClient do
-  @moduledoc false
+  @moduledoc """
+  Connects to Yata socket server and translation channel.
+  """
   require Logger
 
   alias Phoenix.Channels.GenSocketClient
@@ -9,6 +11,9 @@ defmodule Yatapp.SocketClient do
   @table :exi18n_translations
   @socket_url "ws://yatapp.net/socket/websocket"
 
+  @doc """
+  Starts a socket client.
+  """
   def start_link() do
     GenSocketClient.start_link(
       __MODULE__,
@@ -17,10 +22,16 @@ defmodule Yatapp.SocketClient do
     )
   end
 
+  @doc """
+  Connects to external websocket server.
+  """
   def init(url) do
     {:connect, url, [{"api_token", Env.get(:api_key)}], %{first_join: true, ping_ref: 1}}
   end
 
+  @doc """
+  Connects to channel and initialize an ets table.
+  """
   def handle_connected(transport, state) do
     Logger.info("connected")
     :ets.new(@table, [:named_table, :protected])
@@ -79,7 +90,9 @@ defmodule Yatapp.SocketClient do
   end
 
   def handle_message(_topic, "deleted_translation", %{"key" => key}, _transport, state) do
-    remove_translation(key)
+    Enum.each(Env.get(:locales), fn locale ->
+      remove_translation(locale_key(locale, key))
+    end)
     Logger.info("translation deleted: key => #{key}")
     {:ok, state}
   end
@@ -119,25 +132,9 @@ defmodule Yatapp.SocketClient do
     {:ok, state}
   end
 
-  def handle_call({:get_translation, locale, key}, _from, state) do
-    new_key = locale_key(locale, key)
-
-    translation =
-      case :ets.lookup(@table, new_key) do
-        [{_, translation}] -> translation
-        [] -> []
-      end
-
-    {:reply, translation, state}
-  end
-
   def handle_call(message, _transport, _from, state) do
     Logger.warn("Unhandled message #{inspect(message)}")
     {:ok, state}
-  end
-
-  def get_translation(locale, key) do
-    GenServer.call(__MODULE__, {:get_translation, locale, key})
   end
 
   defp load_translations() do

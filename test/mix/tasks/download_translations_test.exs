@@ -1,4 +1,4 @@
-defmodule Yatapp.TranslationsDownloaderTest do
+defmodule Mix.Tasks.DownloadTranslationsTest do
   use ExUnit.Case
   import Mock
 
@@ -17,13 +17,7 @@ defmodule Yatapp.TranslationsDownloaderTest do
     :ok
   end
 
-  test "download/0 with mock" do
-    assert Yatapp.TranslationsDownloader.download() == :ok
-    assert File.read!("test/fixtures/en.yata.json") == File.read!("test/fixtures/en.json")
-  end
-
-  test "ets_download with mock" do
-    assert Yatapp.TranslationsDownloader.ets_download("en") ==
-             File.read!("test/fixtures/en.json") |> Poison.decode!()
+  test "run/1" do
+    assert Mix.Tasks.DownloadTranslations.run([]) == :ok
   end
 end
