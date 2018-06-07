@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/elixir:1.6
+        environment:
+          MIX_ENV: test
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      # specify any bash command here prefixed with `run: `
+      - run: mix deps.get
+      - run: mix test
