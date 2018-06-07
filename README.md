@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/LLInformatics/yatapp-elixir.svg?style=svg)](https://circleci.com/gh/LLInformatics/yatapp-elixir)
+
 # Yatapp
 
 Welcome to Yata integration Hex package, this package will allow you to easy get your translations from http://yatapp.net service.
