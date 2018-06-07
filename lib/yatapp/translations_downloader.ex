@@ -19,8 +19,9 @@ defmodule Yatapp.TranslationsDownloader do
       :ok
 
   """
+  @spec download() :: :ok
   def download() do
-    Enum.each(Env.get(:languages), fn lang ->
+    Enum.each(Env.get(:locales), fn lang ->
       IO.inspect("Getting translation for #{lang}")
       save_file(lang)
       IO.inspect("#{lang}.yata.#{Env.get(:translations_format)} saved")
