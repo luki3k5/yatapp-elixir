@@ -44,8 +44,8 @@ defmodule Yatapp.MixProject do
       {:websocket_client, "~> 1.2"},
       {:poison, "~> 2.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:inch_ex, "~> 0.5", only: [:dev, :test]},
-      {:excoveralls, "~> 0.8.2"}
+      {:excoveralls, "~> 0.8.2"},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 end

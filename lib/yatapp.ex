@@ -4,7 +4,9 @@ defmodule Yatapp do
   """
   alias Yatapp.Env
 
-  @doc false
+  @doc """
+  Start supervisor when websocket enabled.
+  """
   def start(_type, _args) do
     case Env.get(:enable_websocket) do
       true ->

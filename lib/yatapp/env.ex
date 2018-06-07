@@ -1,44 +1,4 @@
 defmodule Yatapp.Env do
-  @moduledoc """
-  Module provides helpers for accessing configuraion for app.
-  """
-  @doc """
-  Returns current enviroment
-  ## Examples
-      iex> Yatapp.Env.env()
-      :test
-  """
-  @spec env() :: atom
-  def env, do: String.to_atom(get(:env))
-
-  @doc """
-  Checks if current enviroment is the one passed
-  ## Examples
-      iex> Yatapp.Env.env?(:test)
-      true
-      iex> Yatapp.Env.env?(:prod)
-      false
-  """
-  @spec env?(atom) :: boolean
-  def env?(environment), do: environment == env()
-
-  @doc """
-  Checks if current enviroment is the one of passed.
-  ## Examples
-      iex> Yatapp.Env.env_in?([:dev, :test])
-      true
-      iex> Yatapp.Env.env_in?([:staging, :prod])
-      false
-  """
-  @spec env_in?(list(atom)) :: boolean
-  def env_in?(envs), do: Enum.member?(envs, env())
-
-  @doc """
-  Returns path to file.
-  """
-  @spec path(String.t()) :: String.t()
-  def path(path), do: Application.app_dir(:yatapp, path)
-
   @doc """
   Returns configuration for provided key.
   ## Config

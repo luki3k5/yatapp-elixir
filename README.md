@@ -75,14 +75,15 @@ The values for given locale and key can be fetched using `Yatappp.ExI18n` module
 # Examples
 
 # en
-key1: "test1"
-key2: "test2 %{name}"
+number: 1
+hello_name: "Hello %{name}"
 
-Yatapp.ExI18n.t("en", "key") #=> "test1"
-Yatapp.ExI18n.t("en", "key2", %{name: "test3"}) #=> "test2 test3"
+Yatapp.ExI18n.t("en", "number") #=> 1
+Yatapp.ExI18n.t("en", "hello_name", %{name: "John"}) #=> "Hello John"
 ```
 
 ### Configuration Parameters
+
 | Option | Description | Default | Websocket | API |
 | :--    | :--         | :--:    | :--:      | :--: |
 | api_key | Organization Settings > Security > API token | | required | required |

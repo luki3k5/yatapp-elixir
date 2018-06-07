@@ -20,6 +20,11 @@ defmodule ExI18nTest do
     assert Yatapp.ExI18n.fallback() == true
   end
 
+  test "locales/0" do
+    Application.put_env(:yatapp, :locales, ["en", "pl"])
+    assert Yatapp.ExI18n.locales() == ["en", "pl"]
+  end
+
   test "t/3 returns proper translation for given path" do
     assert Yatapp.ExI18n.t("en", "number") == 1
     assert Yatapp.ExI18n.t("en", "hello") == "Hello world"
@@ -96,11 +101,11 @@ defmodule ExI18nTest do
     assert Yatapp.ExI18n.t("de", "empty") != Yatapp.ExI18n.t("en", "empty")
   end
 
-  def create_ets_table do
+  defp create_ets_table do
     :ets.new(:exi18n_translations, [:named_table, :protected])
   end
 
-  def create_translations(map) do
+  defp create_translations(map) do
     Enum.map(map, fn {key, value} ->
       create_translation(key, value)
     end)
