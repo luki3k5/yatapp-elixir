@@ -45,14 +45,14 @@ defmodule Yatapp.MixProject do
       {:websocket_client, "~> 1.2"},
       {:poison, "~> 2.0"},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.8.2"},
+      {:excoveralls, "~> 0.8.2", only: :test},
       {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
   defp package do
     [
-      files: ["lib", "config", "mix.exs", "README.md"],
+      files: ["lib", "config", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Katarzyna Kobierska"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/LLInformatics/yatapp-elixir"}
