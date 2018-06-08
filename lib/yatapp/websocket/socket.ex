@@ -93,6 +93,7 @@ defmodule Yatapp.SocketClient do
     Enum.each(Env.get(:locales), fn locale ->
       remove_translation(locale_key(locale, key))
     end)
+
     Logger.info("translation deleted: key => #{key}")
     {:ok, state}
   end

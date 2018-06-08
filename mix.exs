@@ -25,7 +25,8 @@ defmodule Yatapp.MixProject do
       docs: [
         main: "Yatapp",
         extras: ["README.md"]
-      ]
+      ],
+      package: package()
     ]
   end
 
@@ -46,6 +47,15 @@ defmodule Yatapp.MixProject do
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:excoveralls, "~> 0.8.2"},
       {:mock, "~> 0.3.0", only: :test}
+    ]
+  end
+
+  defp package do
+    [
+      files: ["lib", "config", "mix.exs", "README.md"],
+      maintainers: ["Katarzyna Kobierska"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/LLInformatics/yatapp-elixir"}
     ]
   end
 end

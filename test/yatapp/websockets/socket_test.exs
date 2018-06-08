@@ -12,7 +12,17 @@ defmodule Yatapp.SocketClientTest do
   end
 
   test "handle_message/5 'new_translation'" do
-    assert Yatapp.SocketClient.handle_message("topic", "new_translation", %{"key" => "city", "values" => [%{"lang" => "en", "text" => "City"}, %{"lang" => "de", "text" => ""}]}, "transport", "state") == {:ok, "state"}
+    assert Yatapp.SocketClient.handle_message(
+             "topic",
+             "new_translation",
+             %{
+               "key" => "city",
+               "values" => [%{"lang" => "en", "text" => "City"}, %{"lang" => "de", "text" => ""}]
+             },
+             "transport",
+             "state"
+           ) == {:ok, "state"}
+
     assert :ets.lookup(:exi18n_translations, "en.city") == [{"en.city", "City"}]
     assert :ets.lookup(:exi18n_translations, "en.empty") == [{"en.empty", "empty"}]
     assert :ets.lookup(:exi18n_translations, "de.empty") == [{"de.empty", ""}]
@@ -20,19 +30,48 @@ defmodule Yatapp.SocketClientTest do
 
   test "handle_message/5 'updated_translation'" do
     # updated key and value
-    assert Yatapp.SocketClient.handle_message("topic", "updated_translation", %{"old_key" => "number", "new_key" => "number_two", "values" => [%{"lang" => "en", "text" => 2}, %{"lang" => "de", "text" => 2}]}, "transport", "state") == {:ok, "state"}
+    assert Yatapp.SocketClient.handle_message(
+             "topic",
+             "updated_translation",
+             %{
+               "old_key" => "number",
+               "new_key" => "number_two",
+               "values" => [%{"lang" => "en", "text" => 2}, %{"lang" => "de", "text" => 2}]
+             },
+             "transport",
+             "state"
+           ) == {:ok, "state"}
+
     assert :ets.lookup(:exi18n_translations, "en.number") == []
     assert :ets.lookup(:exi18n_translations, "en.number_two") == [{"en.number_two", 2}]
     assert :ets.lookup(:exi18n_translations, "de.number_two") == [{"de.number_two", 2}]
 
     # updated value
-    assert Yatapp.SocketClient.handle_message("topic", "updated_translation", %{"old_key" => "number", "new_key" => "number", "values" => [%{"lang" => "en", "text" => 2}, %{"lang" => "de", "text" => 3}]}, "transport", "state") == {:ok, "state"}
+    assert Yatapp.SocketClient.handle_message(
+             "topic",
+             "updated_translation",
+             %{
+               "old_key" => "number",
+               "new_key" => "number",
+               "values" => [%{"lang" => "en", "text" => 2}, %{"lang" => "de", "text" => 3}]
+             },
+             "transport",
+             "state"
+           ) == {:ok, "state"}
+
     assert :ets.lookup(:exi18n_translations, "en.number") == [{"en.number", 2}]
     assert :ets.lookup(:exi18n_translations, "de.number") == [{"de.number", 3}]
   end
 
   test "handle_message/5 'deleted_translation'" do
-    assert Yatapp.SocketClient.handle_message("topic", "deleted_translation", %{"key" => "empty"}, "transport", "state") == {:ok, "state"}
+    assert Yatapp.SocketClient.handle_message(
+             "topic",
+             "deleted_translation",
+             %{"key" => "empty"},
+             "transport",
+             "state"
+           ) == {:ok, "state"}
+
     assert :ets.lookup(:exi18n_translations, "en.empty") == []
     assert :ets.lookup(:exi18n_translations, "de.empty") == []
   end
