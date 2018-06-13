@@ -13,7 +13,7 @@ Add `yatapp` to your list of dependencies and to `applications` in `mix.exs`:
 
 def deps do
   [
-    {:yatapp, "~> 0.1.1"}
+    {:yatapp, "~> 0.1.2"}
   ]
 end
 

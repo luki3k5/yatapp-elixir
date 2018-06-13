@@ -12,14 +12,14 @@ defmodule Yatapp.TranslationsDownloaderTest do
   ]) do
     Application.put_env(:yatapp, :save_to_path, "test/fixtures/")
     Application.put_env(:yatapp, :translations_format, "json")
-    Application.put_env(:yatapp, :locales, ["en"])
+    Application.put_env(:yatapp, :locales, ["en_US"])
 
     :ok
   end
 
   test "download/0 with mock" do
     assert Yatapp.TranslationsDownloader.download() == :ok
-    assert File.read!("test/fixtures/en.yata.json") == File.read!("test/fixtures/en.json")
+    assert File.read!("test/fixtures/en_US.json") == File.read!("test/fixtures/en.json")
   end
 
   test "ets_download with mock" do

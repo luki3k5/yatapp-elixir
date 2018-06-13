@@ -24,7 +24,7 @@ defmodule Yatapp.TranslationsDownloader do
     Enum.each(Env.get(:locales), fn lang ->
       IO.inspect("Getting translation for #{lang}")
       save_file(lang)
-      IO.inspect("#{lang}.yata.#{Env.get(:translations_format)} saved")
+      IO.inspect("#{lang}.#{Env.get(:translations_format)} saved")
     end)
   end
 
@@ -59,6 +59,6 @@ defmodule Yatapp.TranslationsDownloader do
       File.mkdir(Env.get(:save_to_path))
     end
 
-    File.write!("#{Env.get(:save_to_path)}#{lang}.yata.#{Env.get(:translations_format)}", body)
+    File.write!("#{Env.get(:save_to_path)}#{lang}.#{Env.get(:translations_format)}", body)
   end
 end
