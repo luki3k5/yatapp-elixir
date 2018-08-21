@@ -13,7 +13,7 @@ Add `yatapp` to your list of dependencies and to `applications` in `mix.exs`:
 
 def deps do
   [
-    {:yatapp, "~> 0.1.2"}
+    {:yatapp, "~> 0.1.3"}
   ]
 end
 
@@ -41,6 +41,7 @@ config :yatapp,
   translations_format: "yml",
   save_to_path: "priv/locales/",
   root: false,
+  strip_empty: false,
   enable_websocket: false
 ```
 
@@ -96,6 +97,7 @@ Yatapp.ExI18n.t("en", "hello_name", %{name: "John"}) #=> "Hello John"
 | translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, strings, plist) | `"yml"` | - | optional |
 | save_to_path | A directory where translations will be saved. | `"priv/locales/"` | - | optional |
 | root | Download with language as a root element of the translation | `false` | - | optional |
+| strip_empty | Generate only keys that have text and skip empty ones | `false` | - | optional |
 | enable_websocket | Enable websocket integration | `false` | required | optional |
 | var_prefix | Prefix to values in translations. | `%{` | optional | optional |
 | var_suffix | Suffix for values in translations. | `}` | optional | optional |
