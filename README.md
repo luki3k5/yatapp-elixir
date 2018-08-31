@@ -18,8 +18,7 @@ def deps do
 end
 
 def application do
-  [applications: [
-    :yatapp
+  [applications: [:yatapp]]
 end
 ```
 
