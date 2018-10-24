@@ -53,7 +53,7 @@ defmodule Yatapp.MixProject do
   defp package do
     [
       files: ["lib", "config", "mix.exs", "README.md", "LICENSE.md"],
-      maintainers: ["Katarzyna Kobierska"],
+      maintainers: ["Katarzyna Kobierska", "Łukasz Łażewski"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/LLInformatics/yatapp-elixir"}
     ]
