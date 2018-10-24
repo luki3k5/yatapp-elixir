@@ -9,7 +9,7 @@ defmodule Yatapp.SocketClient do
 
   @behaviour GenSocketClient
   @table :exi18n_translations
-  @socket_url "ws://run.yatapp.net/socket/websocket"
+  @socket_url "wss://run.yatapp.net/socket/websocket"
 
   @doc """
   Starts a socket client.
