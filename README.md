@@ -22,6 +22,7 @@ def application do
 end
 ```
 
+
 ## Configuration
 Package can be used in two ways:
 * integration through API
