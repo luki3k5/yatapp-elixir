@@ -8,6 +8,7 @@ defmodule Yatapp.MixProject do
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
@@ -43,7 +44,7 @@ defmodule Yatapp.MixProject do
     [
       {:phoenix_gen_socket_client, "~> 2.1.1"},
       {:websocket_client, "~> 1.2"},
-      {:poison, ">= 2.0.0"},
+      {:jason, ">= 1.0.0", only: [:dev, :test]},
       {:ex_doc, "~> 0.19.1", only: :dev, runtime: false},
       {:excoveralls, "~> 0.8.2", only: :test},
       {:mock, "~> 0.3.0", only: :test}
@@ -58,4 +59,7 @@ defmodule Yatapp.MixProject do
       links: %{"GitHub" => "https://github.com/LLInformatics/yatapp-elixir"}
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end
