@@ -27,7 +27,7 @@ defmodule Yatapp do
       iex> Yatapp.translate("en", "hello_name", name: %{"1" => "2"})
       ** (ArgumentError) Only string, boolean or number allowed for values.
   """
-  @spec translate(String.t(), String.t(), map) :: String.t() | none
+  @spec translate(String.t(), String.t(), map | Keyword.t()) :: String.t() | none
   def translate(locale, key, values \\ %{}), do: Yatapp.Translator.translate(locale, key, values)
 
   defdelegate locale(), to: Yatapp.Config, as: :default_locale
