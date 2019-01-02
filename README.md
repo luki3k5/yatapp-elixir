@@ -62,10 +62,19 @@ config :yatapp,
   project_id: System.get_env("YATA_PROJECT_ID"),
   default_locale: "en",
   locales: ~w(en),
-  fallback: false,
-  enable_websocket: true,
+  otp_app: :my_app,
+  json_parser: Jason,
+  store: Yatapp.Store.ETS,
+  download_on_start: false,
+  save_to_path: "priv/locales/",
+  translations_format: "json",
+  translation_file_parser: Jason,
+  root: false,
+  strip_empty: false,
+  enable_websocket: false,
   var_prefix: "%{",
-  var_suffix: "}"
+  var_suffix: "}",
+  fallback: false
 ```
 
 Websocket integration connects to Yata server and stays open. All changes in translations are auto-fetched to the app.
@@ -81,8 +90,8 @@ The values for given locale and key can be fetched using `Yatappp.ExI18n` module
 number: 1
 hello_name: "Hello %{name}"
 
-Yatapp.ExI18n.t("en", "number") #=> 1
-Yatapp.ExI18n.t("en", "hello_name", %{name: "John"}) #=> "Hello John"
+Yatapp.translate("en", "number") #=> 1
+Yatapp.translate("en", "hello_name", %{name: "John"}) #=> "Hello John"
 ```
 
 ### Configuration Parameters
@@ -93,8 +102,13 @@ Yatapp.ExI18n.t("en", "hello_name", %{name: "John"}) #=> "Hello John"
 | project_id | Organization Settings > Security > Projects > Id | | required | required |
 | default_locale | Default locale in your application. | `"en"` | optional | - |
 | locales | Supported locales. | `["en"]` | optional | optional |
+| otp_app | Used to generate proper path to locale files | | - | - |
+| store | Module that implements `Yatapp.Store` | `Yatapp.Store.ETS` | - | - |
+| download_on_start | Download all translations when app starts | `false` | - | - |
+| json_parser | JSON parser that will be used to parse response from API | | - | required |
 | fallback | Fallback to default locale if translation empty. | `false` | optional | - |
 | translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, strings, plist) | `"yml"` | - | optional |
+| translation_file_parser | Parser that will parse downloaded files | | - | optional |
 | save_to_path | A directory where translations will be saved. | `"priv/locales/"` | - | optional |
 | root | Download with language as a root element of the translation | `false` | - | optional |
 | strip_empty | Generate only keys that have text and skip empty ones | `false` | - | optional |
