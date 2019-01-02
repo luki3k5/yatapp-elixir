@@ -3,7 +3,7 @@ defmodule Yatapp.Translator do
 
   alias Yatapp.Config
 
-  @spec translate(String.t(), String.t(), map) :: String.t() | none
+  @spec translate(String.t(), String.t(), map | Keyword.t()) :: String.t() | none
   def translate(locale, key, values) when is_bitstring(key) and is_map(values) do
     locale
     |> check_locale
