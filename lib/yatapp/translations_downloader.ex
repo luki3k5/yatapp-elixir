@@ -30,7 +30,7 @@ defmodule Yatapp.TranslationsDownloader do
   @spec download_and_store() :: :ok
   def download_and_store() do
     Enum.each(Config.get(:locales), fn locale ->
-      {:ok, {{_, 200, 'OK'}, _headers, body}} = get_response(locale, "json", true, false)
+      {:ok, {{_, 200, 'OK'}, _headers, body}} = get_response(locale, "json", false, false)
       parser = Config.get(:json_parser)
 
       body
