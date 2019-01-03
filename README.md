@@ -71,7 +71,7 @@ config :yatapp,
   translation_file_parser: Jason,
   root: false,
   strip_empty: false,
-  enable_websocket: false,
+  enable_websocket: true,
   var_prefix: "%{",
   var_suffix: "}",
   fallback: false
