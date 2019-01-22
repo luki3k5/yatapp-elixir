@@ -79,7 +79,7 @@ config :yatapp,
 
 Websocket integration connects to Yata server and stays open. All changes in translations are auto-fetched to the app.
 
-When app connects to the Yata server for the first time it fetches all translation and saves them to the ets table. Then all actions on translations like create, update and delete are broadcasting information and ets table is updated.
+When app connects to the Yata server for the first time it fetches all translation and saves them to the ETS table when `download_on_start` option is set to true. If not it will fetch translations to the ETS table from files. Then all actions on translations like create, update and delete are broadcasting information and the ETS table is updated.
 
 The values for given locale and key can be fetched using `Yatappp.ExI18n` module:
 
@@ -115,3 +115,11 @@ Yatapp.translate("en", "hello_name", %{name: "John"}) #=> "Hello John"
 | enable_websocket | Enable websocket integration | `false` | required | optional |
 | var_prefix | Prefix to values in translations. | `%{` | optional | optional |
 | var_suffix | Suffix for values in translations. | `}` | optional | optional |
+
+### Store
+
+You can choose where you want to store your translations. The default `store` is the `Yata.Store.ETS` table. The other store you can set is `Yatapp.Store.PersistentTerm` or write your own module.
+
+### Parsers
+
+There're two parsers `json_parser` and `translation_file_parser`. `json_parser` is used to parse the response from API for `json` files used to fetch translations through Websocket. The second one is `translation_file_parser` which is used to parse downloaded files. Both are set to `Json` parser by default.
