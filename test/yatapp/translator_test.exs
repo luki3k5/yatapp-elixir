@@ -83,4 +83,53 @@ defmodule Yatapp.TranslatorTest do
     assert Yatapp.Translator.translate("de", "empty", %{}) !=
              Yatapp.Translator.translate("en", "empty", %{})
   end
+
+  test "t/3 returns translation with value count which is not pluralized" do
+    Yatapp.Fixtures.create_translation("en.days", "%{count} days")
+
+    assert Yatapp.Translator.translate("en", "days", %{count: 10})
+  end
+
+  test "t/3 pluralize translation with base pluralizer" do
+    Application.put_env(:yatapp, :pluralizer, Yatapp.Pluralization.Base)
+    Application.put_env(:yatapp, :locales, ~w(en))
+
+    Yatapp.Fixtures.create_translation("en.days.one", "%{count} day")
+    Yatapp.Fixtures.create_translation("en.days.zero", "no days")
+    Yatapp.Fixtures.create_translation("en.days.other", "%{count} days")
+
+    # == "1 day"
+    assert Yatapp.Translator.translate("en", "days", %{count: 1})
+    # == "no days"
+    assert Yatapp.Translator.translate("en", "days", %{count: 0})
+    # == "3 days"
+    assert Yatapp.Translator.translate("en", "days", %{count: 3})
+  end
+
+  test "t/3 pluralize translation with custom pluralizer" do
+    Application.put_env(:yatapp, :pluralizer, Yatapp.Pluralization.Example)
+    Application.put_env(:yatapp, :locales, ~w(en pl))
+
+    Yatapp.Fixtures.create_translation("en.homes.one", "%{count} home")
+    Yatapp.Fixtures.create_translation("en.homes.zero", "no homes")
+    Yatapp.Fixtures.create_translation("en.homes.other", "%{count} homes")
+    Yatapp.Fixtures.create_translation("pl.homes.one", "%{count} dom")
+    Yatapp.Fixtures.create_translation("pl.homes.zero", "brak domów")
+    Yatapp.Fixtures.create_translation("pl.homes.few", "%{count} domy")
+    Yatapp.Fixtures.create_translation("pl.homes.many", "%{count} domów")
+    Yatapp.Fixtures.create_translation("pl.homes.other", "%{count} domu")
+
+    assert Yatapp.Translator.translate("en", "homes", %{count: 1}) == "1 home"
+    assert Yatapp.Translator.translate("en", "homes", %{count: 0}) == "no homes"
+    assert Yatapp.Translator.translate("en", "homes", %{count: 3}) == "3 homes"
+
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 1}) == "1 dom"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 0}) == "brak domów"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 3}) == "3 domy"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 13}) == "13 domów"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 7}) == "7 domów"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 101}) == "101 domów"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 104}) == "104 domy"
+    assert Yatapp.Translator.translate("pl", "homes", %{count: 1.5}) == "1.5 domu"
+  end
 end

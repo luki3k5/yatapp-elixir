@@ -4,7 +4,7 @@ defmodule Yatapp.MixProject do
   def project do
     [
       app: :yatapp,
-      version: "0.2.1",
+      version: "0.2.2",
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -43,11 +43,11 @@ defmodule Yatapp.MixProject do
   defp deps do
     [
       {:phoenix_gen_socket_client, "~> 2.1.1"},
-      {:websocket_client, "~> 1.2"},
+      {:websocket_client, "~> 1.3"},
       {:jason, ">= 1.0.0", only: [:dev, :test]},
       {:ex_doc, "~> 0.19.1", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.8.2", only: :test},
-      {:mock, "~> 0.3.0", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:mock, "~> 0.3.3", only: :test}
     ]
   end
 

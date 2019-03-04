@@ -41,3 +41,8 @@ jobs:
           key: v1-build-cache
           paths: "_build"
       - run: mix test
+      - run:
+          name: Code formatted
+          command: mix format --dry-run --check-formatted
+          environment:
+            MIX_ENV: dev

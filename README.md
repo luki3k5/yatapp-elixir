@@ -93,6 +93,35 @@ hello_name: "Hello %{name}"
 Yatapp.translate("en", "number") #=> 1
 Yatapp.translate("en", "hello_name", %{name: "John"}) #=> "Hello John"
 ```
+### Pluralization
+
+Yata Pluralization is useful when you want your application to customize pluralization rules. The base pluralizer is `Yatapp.Pluralization.Base` which apply rules with three keys: :zero, :one and :other. You can create your own and set it as your default pluralizer (see Yatapp.Pluralization.Example). To set new pluralizer change configuration settings:
+
+```elixir
+# config.exs
+
+config :yatapp,
+  pluralizer: Yatapp.Pluralization.Example
+```
+
+The interpolation value `:count` has a special role it both is interpolated to the translation and used to pick a pluralization form the translations according to the pluralization rules defined in the pluralization backend.
+
+```elixir
+# Examples
+
+# en
+
+messages:
+  zero: "no message"
+  one: "1 message"
+  other: "%{count} messages"
+
+Yatapp.translate("en", "messages", %{count: 0}) #=> "no message"
+Yatapp.translate("en", "messages", %{count: 1}) #=> "1 message"
+Yatapp.translate("en", "messages", %{count: 2}) #=> "no messages"
+```
+
+[Language Plural Rules](https://www.unicode.org/cldr/charts/34/supplemental/language_plural_rules.html) (CLDR)
 
 ### Configuration Parameters
 
@@ -115,3 +144,4 @@ Yatapp.translate("en", "hello_name", %{name: "John"}) #=> "Hello John"
 | enable_websocket | Enable websocket integration | `false` | required | optional |
 | var_prefix | Prefix to values in translations. | `%{` | optional | optional |
 | var_suffix | Suffix for values in translations. | `}` | optional | optional |
+| pluralizer | Pluralizer that will be used to parse plural forms | `Yatapp.Pluralization.Base` | - | - |
