@@ -31,6 +31,9 @@ defmodule Yatapp.Config do
   @spec get(atom) :: nil | String.t() | integer | boolean | atom
   def get(key), do: resolve(Application.get_env(:yatapp, key))
 
+  @spec pluralizer() :: atom
+  def pluralizer, do: get(:pluralizer) || Yatapp.Pluralization.Base
+
   defp resolve({:system, var}), do: resolve({var, nil})
   defp resolve({:system, var, default}), do: resolve({var, default})
   defp resolve({var, :boolean}), do: System.get_env(var) == "true"
