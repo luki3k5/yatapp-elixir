@@ -14,14 +14,15 @@ defmodule Yatapp.TranslationsDownloaderTest do
 
   test "download/0" do
     with_mocks [
-        {
-          HTTPoison, [],
-          [
-            start: fn -> true end,
-            get!: fn _url -> %HTTPoison.Response{body: File.read!("test/fixtures/en.json")} end
-          ]
-        }
-      ] do
+      {
+        HTTPoison,
+        [],
+        [
+          start: fn -> true end,
+          get!: fn _url -> %HTTPoison.Response{body: File.read!("test/fixtures/en.json")} end
+        ]
+      }
+    ] do
       assert Yatapp.TranslationsDownloader.download() == :ok
       assert File.read!("test/fixtures/en_US.json") == File.read!("test/fixtures/en.json")
     end
@@ -29,14 +30,15 @@ defmodule Yatapp.TranslationsDownloaderTest do
 
   test "download_and_store/0" do
     with_mocks [
-        {
-          HTTPoison, [],
-          [
-            start: fn -> true end,
-            get!: fn _url -> %HTTPoison.Response{body: File.read!("test/fixtures/en.json")} end
-          ]
-        }
-      ] do
+      {
+        HTTPoison,
+        [],
+        [
+          start: fn -> true end,
+          get!: fn _url -> %HTTPoison.Response{body: File.read!("test/fixtures/en.json")} end
+        ]
+      }
+    ] do
       assert Yatapp.TranslationsDownloader.download_and_store() == :ok
     end
   end
