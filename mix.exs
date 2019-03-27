@@ -4,7 +4,7 @@ defmodule Yatapp.MixProject do
   def project do
     [
       app: :yatapp,
-      version: "0.2.3",
+      version: "0.2.4",
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -34,7 +34,7 @@ defmodule Yatapp.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :ssl],
+      extra_applications: [:logger],
       mod: {Yatapp, []}
     ]
   end
@@ -44,6 +44,7 @@ defmodule Yatapp.MixProject do
     [
       {:phoenix_gen_socket_client, "~> 2.1.1"},
       {:websocket_client, "~> 1.3"},
+      {:httpoison, "~> 1.4"},
       {:jason, ">= 1.0.0", only: [:dev, :test]},
       {:ex_doc, "~> 0.19.1", only: :dev, runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
