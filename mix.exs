@@ -4,7 +4,7 @@ defmodule Yatapp.MixProject do
   def project do
     [
       app: :yatapp,
-      version: "0.2.2",
+      version: "0.2.3",
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -34,7 +34,7 @@ defmodule Yatapp.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :ssl],
       mod: {Yatapp, []}
     ]
   end

@@ -13,7 +13,7 @@ Add `yatapp` to your list of dependencies and to `applications` in `mix.exs`:
 
 def deps do
   [
-    {:yatapp, "~> 0.2.2"}
+    {:yatapp, "~> 0.2.3"}
   ]
 end
 
@@ -48,7 +48,7 @@ config :yatapp,
 API integration allows you to download all translation using mix task:
 
 ```bash
-$ mix download_translations
+$ mix yatapp.download_translations
 ```
 
 ### Websocket Integration
