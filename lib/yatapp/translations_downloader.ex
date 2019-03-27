@@ -30,7 +30,7 @@ defmodule Yatapp.TranslationsDownloader do
   @spec download_and_store() :: :ok
   def download_and_store() do
     Enum.each(Config.get(:locales), fn locale ->
-      {:ok, {{_, 200, 'OK'}, _headers, body}} = get_response(locale, "json", false, false)
+      %HTTPoison.Response{body: body} = get_response(locale, "json", false, false)
       parser = Config.get(:json_parser)
 
       body
@@ -61,17 +61,17 @@ defmodule Yatapp.TranslationsDownloader do
       "",
       "?apiToken=#{Config.get(:api_key)}&root=#{root}&strip_empty=#{strip_empty}"
     )
-    |> String.to_charlist()
   end
 
   defp get_response(lang, format, root, strip_empty) do
-    :inets.start()
+    HTTPoison.start()
 
-    :httpc.request(:get, {download_url(lang, format, root, strip_empty), []}, [], [])
+    download_url(lang, format, root, strip_empty)
+    |> HTTPoison.get!()
   end
 
   defp save_file(lang) do
-    {:ok, {{_, 200, 'OK'}, _headers, body}} =
+    %HTTPoison.Response{body: body} =
       get_response(
         lang,
         Config.get(:translations_format),
