@@ -5,10 +5,12 @@ defmodule Yatapp.Translator do
 
   @spec translate(String.t(), String.t(), map | Keyword.t()) :: String.t() | none
   def translate(locale, key, values) when is_bitstring(key) and is_map(values) do
+    pluralization_key = pluralization_key(locale, key, values)
+
     locale
-    |> check_locale
-    |> get_translation(key)
-    |> check_translation(key)
+    |> check_locale()
+    |> get_translation(pluralization_key)
+    |> check_translation(pluralization_key)
     |> check_values(values)
     |> compile(key, values)
   end
@@ -83,4 +85,19 @@ defmodule Yatapp.Translator do
   end
 
   defp variable(key), do: "#{Config.prefix()}#{key}#{Config.suffix()}"
+
+  defp pluralization_key(locale, key, %{count: count}) do
+    try do
+      get_translation(locale, key)
+      key
+    rescue
+      _ in ArgumentError ->
+        pluralization = Config.pluralizer()
+
+        pluralization.parse_key(locale, key, count)
+        |> Enum.join(".")
+    end
+  end
+
+  defp pluralization_key(_, key, _), do: key
 end
