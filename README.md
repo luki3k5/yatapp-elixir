@@ -42,7 +42,8 @@ config :yatapp,
   save_to_path: "priv/locales/",
   root: false,
   strip_empty: false,
-  enable_websocket: false
+  enable_websocket: false,
+  download_on_start: true
 ```
 
 API integration allows you to download all translation using mix task:
@@ -65,7 +66,7 @@ config :yatapp,
   otp_app: :my_app,
   json_parser: Jason,
   store: Yatapp.Store.ETS,
-  download_on_start: false,
+  download_on_start: true,
   save_to_path: "priv/locales/",
   translations_format: "json",
   translation_file_parser: Jason,
@@ -79,7 +80,7 @@ config :yatapp,
 
 Websocket integration connects to Yata server and stays open. All changes in translations are auto-fetched to the app.
 
-When app connects to the Yata server for the first time it fetches all translation and saves them to the ets table. Then all actions on translations like create, update and delete are broadcasting information and ets table is updated.
+When app connects to the Yata server for the first time it fetches all translation and saves them to the ETS table. Then all actions on translations like create, update and delete are broadcasting information and ETS table is updated.
 
 The values for given locale and key can be fetched using `Yatappp.ExI18n` module:
 
@@ -93,6 +94,20 @@ hello_name: "Hello %{name}"
 Yatapp.translate("en", "number") #=> 1
 Yatapp.translate("en", "hello_name", %{name: "John"}) #=> "Hello John"
 ```
+
+### Download translation
+
+There are two options to download translations. First, by using mix task:
+
+```bash
+$ mix yatapp.download_translations
+```
+
+Mix task saves downloaded translations files to the indicated directory in the configuration.
+
+Whenever an application starts, we fetch new translations from Yata. The `download_on_start` option, which is set to `true` by default, is responsible for this behavior. If you prefer to fetch translations from local files on start, set `download_on_start` to `false`.
+
+
 ### Pluralization
 
 Yata Pluralization is useful when you want your application to customize pluralization rules. The base pluralizer is `Yatapp.Pluralization.Base` which apply rules with three keys: :zero, :one and :other. You can create your own and set it as your default pluralizer (see Yatapp.Pluralization.Example). To set new pluralizer change configuration settings:
@@ -133,8 +148,8 @@ Yatapp.translate("en", "messages", %{count: 2}) #=> "no messages"
 | locales | Supported locales. | `["en"]` | optional | optional |
 | otp_app | Used to generate proper path to locale files | | - | - |
 | store | Module that implements `Yatapp.Store` | `Yatapp.Store.ETS` | - | - |
-| download_on_start | Download all translations when app starts | `false` | - | - |
-| json_parser | JSON parser that will be used to parse response from API | | - | required |
+| download_on_start | Download all translations when app starts | `true` | - | - |
+| json_parser | JSON parser that will be used to parse response from API | Jason | - | required |
 | fallback | Fallback to default locale if translation empty. | `false` | optional | - |
 | translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, strings, plist) | `"yml"` | - | optional |
 | translation_file_parser | Parser that will parse downloaded files | | - | optional |
