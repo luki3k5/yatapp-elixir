@@ -67,7 +67,7 @@ defmodule Yatapp.TranslationsDownloader do
     HTTPoison.start()
 
     download_url(lang, format, root, strip_empty)
-    |> HTTPoison.get!()
+    |> HTTPoison.get!([], [timeout: Config.get(:http).timeout, recv_timeout: Config.get(:http).recv_timeout])
   end
 
   defp save_file(lang) do
