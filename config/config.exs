@@ -18,4 +18,8 @@ config :yatapp,
   enable_websocket: false,
   var_prefix: "%{",
   var_suffix: "}",
-  fallback: false
+  fallback: false,
+  http: %{
+    timeout: 50_000,
+    recv_timeout: 50_000
+  }
