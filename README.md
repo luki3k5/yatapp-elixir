@@ -13,7 +13,7 @@ Add `yatapp` to your list of dependencies and to `applications` in `mix.exs`:
 
 def deps do
   [
-    {:yatapp, "~> 0.2.4"}
+    {:yatapp, "~> 0.2.6"}
   ]
 end
 
@@ -138,6 +138,22 @@ Yatapp.translate("en", "messages", %{count: 2}) #=> "no messages"
 
 [Language Plural Rules](https://www.unicode.org/cldr/charts/34/supplemental/language_plural_rules.html) (CLDR)
 
+### Configure http timeouts
+
+Http timeout options:
+- `:timeout` - timeout for establishing a TCP or SSL connection, in milliseconds. Default is 8000
+- `:recv_timeout` - timeout for receiving an HTTP response from the socket. Default is 5000
+
+```elixir
+# config.exs
+
+config :yatapp,
+  http: %{
+    timeout: 50_000,
+    recv_timeout: 50_000
+  }
+```
+
 ### Configuration Parameters
 
 | Option | Description | Default | Websocket | API |
@@ -149,7 +165,7 @@ Yatapp.translate("en", "messages", %{count: 2}) #=> "no messages"
 | otp_app | Used to generate proper path to locale files | | - | - |
 | store | Module that implements `Yatapp.Store` | `Yatapp.Store.ETS` | - | - |
 | download_on_start | Download all translations when app starts | `true` | - | - |
-| json_parser | JSON parser that will be used to parse response from API | Jason | - | required |
+| json_parser | JSON parser that will be used to parse response from API | `Jason` | - | required |
 | fallback | Fallback to default locale if translation empty. | `false` | optional | - |
 | translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, strings, plist) | `"yml"` | - | optional |
 | translation_file_parser | Parser that will parse downloaded files | | - | optional |
@@ -160,3 +176,4 @@ Yatapp.translate("en", "messages", %{count: 2}) #=> "no messages"
 | var_prefix | Prefix to values in translations. | `%{` | optional | optional |
 | var_suffix | Suffix for values in translations. | `}` | optional | optional |
 | pluralizer | Pluralizer that will be used to parse plural forms | `Yatapp.Pluralization.Base` | - | - |
+| http | Set HTTPoison timeouts: `timeout` and `recv_timeout` | `8000 and 5000 miliseconds` | optional | optional |
