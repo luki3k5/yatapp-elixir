@@ -1,8 +1,8 @@
-[![CircleCI](https://circleci.com/gh/LLInformatics/yatapp-elixir.svg?style=svg)](https://circleci.com/gh/LLInformatics/yatapp-elixir)
+[![CircleCI](https://circleci.com/gh/luki3k5/yatapp-elixir.svg?style=svg)](https://circleci.com/gh/luki3k5/yatapp-elixir) [![Hex pm](http://img.shields.io/hexpm/v/yatapp.svg?style=flat&color=blue)](https://hex.pm/packages/yatapp)
 
 # Yatapp
 
-Welcome to Yata integration Hex package, this package will allow you to easy get your translations from http://yatapp.net service.
+Welcome to Yata integration Hex package, this package will allow you to easy get your translations from https://yatapp.net service.
 
 ## Installation
 
