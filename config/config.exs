@@ -20,6 +20,6 @@ config :yatapp,
   var_suffix: "}",
   fallback: false,
   http: %{
-    timeout: 50_000,
-    recv_timeout: 50_000
+    timeout: 8_000,
+    recv_timeout: 5_000
   }

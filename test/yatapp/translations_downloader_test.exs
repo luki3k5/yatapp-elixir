@@ -19,7 +19,9 @@ defmodule Yatapp.TranslationsDownloaderTest do
         [],
         [
           start: fn -> true end,
-          get!: fn _url -> %HTTPoison.Response{body: File.read!("test/fixtures/en.json")} end
+          get!: fn _url, _params, _options ->
+            %HTTPoison.Response{body: File.read!("test/fixtures/en.json")}
+          end
         ]
       }
     ] do
@@ -35,7 +37,9 @@ defmodule Yatapp.TranslationsDownloaderTest do
         [],
         [
           start: fn -> true end,
-          get!: fn _url -> %HTTPoison.Response{body: File.read!("test/fixtures/en.json")} end
+          get!: fn _url, _params, _options ->
+            %HTTPoison.Response{body: File.read!("test/fixtures/en.json")}
+          end
         ]
       }
     ] do
