@@ -9,7 +9,7 @@ config :yatapp,
   json_parser: Jason,
   store: Yatapp.Store.ETS,
   pluralizer: Yatapp.Pluralization.Base,
-  download_on_start: false,
+  download_on_start: true,
   save_to_path: "priv/locales/",
   translations_format: "json",
   translation_file_parser: Jason,
@@ -18,4 +18,8 @@ config :yatapp,
   enable_websocket: false,
   var_prefix: "%{",
   var_suffix: "}",
-  fallback: false
+  fallback: false,
+  http: %{
+    timeout: 8_000,
+    recv_timeout: 5_000
+  }
