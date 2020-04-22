@@ -2,7 +2,7 @@
 
 # Yatapp
 
-Welcome to Yata integration Hex package, this package will allow you to easy get your translations from https://yatapp.net service.
+Welcome to Yata integration Hex package, this package will allow you to easy get your translations from https://www.yatapp.net service.
 
 ## Installation
 
