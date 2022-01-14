@@ -6,7 +6,18 @@ defmodule Yatapp.TranslationsDownloader do
   alias Yatapp.Config
 
   @api_end_point_url "https://api.yatapp.net/api/v1/project/:project_id/:lang/:format"
-
+  @translation_formats %{
+      "yaml" => "yaml", 
+      "js" => "js", 
+      "json" => "json", 
+      "properties" => "properties", 
+      "xml" => "xml",
+      "xml_escaped" => "xml", 
+      "xml_android_resource" => "xml", 
+      "strings" => "strings",
+      "plist" => "plist"
+    }
+    
   @doc """
   Downloads all translations and saves all locales.
 
@@ -23,7 +34,7 @@ defmodule Yatapp.TranslationsDownloader do
     Enum.each(Config.get(:locales), fn lang ->
       Logger.info("Getting translation for #{lang}")
       save_file(lang)
-      Logger.info("#{lang}.#{Config.get(:translations_format)} saved")
+      Logger.info("#{lang}.#{get_file_extension()} saved")
     end)
   end
 
@@ -37,6 +48,11 @@ defmodule Yatapp.TranslationsDownloader do
       |> parser.decode!()
       |> create_translations(locale)
     end)
+  end
+
+  defp get_file_extension() do
+    format = Config.get(:translations_format)
+    Map.get(@translation_formats, format, format)
   end
 
   defp create_translations(translations, locale) do
@@ -86,7 +102,7 @@ defmodule Yatapp.TranslationsDownloader do
       File.mkdir(Config.get(:save_to_path))
     end
 
-    File.write!("#{Config.get(:save_to_path)}#{lang}.#{Config.get(:translations_format)}", body)
+    File.write!("#{Config.get(:save_to_path)}#{lang}.#{get_file_extension()}", body)
   end
 
   @spec load_from_files() :: :ok
@@ -95,7 +111,7 @@ defmodule Yatapp.TranslationsDownloader do
     parser = Config.get(:translation_file_parser)
 
     Enum.each(Config.get(:locales), fn locale ->
-      path_to_file = "#{Config.get(:save_to_path)}#{locale}.#{Config.get(:translations_format)}"
+      path_to_file = "#{Config.get(:save_to_path)}#{locale}.#{get_file_extension()}"
       path = Application.app_dir(otp_app, path_to_file)
 
       if File.exists?(path) do
