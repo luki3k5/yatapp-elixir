@@ -167,7 +167,7 @@ config :yatapp,
 | download_on_start | Download all translations when app starts | `true` | - | - |
 | json_parser | JSON parser that will be used to parse response from API | `Jason` | - | required |
 | fallback | Fallback to default locale if translation empty. | `false` | optional | - |
-| translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, strings, plist) | `"yml"` | - | optional |
+| translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, xml_escaped, xml_android_resource, strings, plist) | `"yml"` | - | optional |
 | translation_file_parser | Parser that will parse downloaded files | | - | optional |
 | save_to_path | A directory where translations will be saved. | `"priv/locales/"` | - | optional |
 | root | Download with language as a root element of the translation | `false` | - | optional |
