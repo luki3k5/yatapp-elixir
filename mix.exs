@@ -42,7 +42,7 @@ defmodule Yatapp.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_gen_socket_client, "~> 2.1.1"},
+      {:phoenix_gen_socket_client, "~> 4.0.0"},
       {:websocket_client, "~> 1.3"},
       {:httpoison, "~> 1.4"},
       {:jason, ">= 1.0.0", only: [:dev, :test]},
