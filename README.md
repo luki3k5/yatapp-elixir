@@ -13,7 +13,7 @@ Add `yatapp` to your list of dependencies and to `applications` in `mix.exs`:
 
 def deps do
   [
-    {:yatapp, "~> 0.2.6"}
+    {:yatapp, "~> 0.3.0"}
   ]
 end
 
@@ -22,13 +22,15 @@ def application do
 end
 ```
 
-
 ## Configuration
+
 Package can be used in two ways:
-* integration through API
-* websocket integration
+
+- integration through API
+- websocket integration
 
 ### API Integration
+
 Add configuration to your `config/config.exs`:
 
 ```elixir
@@ -53,6 +55,7 @@ $ mix yatapp.download_translations
 ```
 
 ### Websocket Integration
+
 Add configuration to your `config/config.exs`:
 
 ```elixir
@@ -107,7 +110,6 @@ Mix task saves downloaded translations files to the indicated directory in the c
 
 Whenever an application starts, we fetch new translations from Yata. The `download_on_start` option, which is set to `true` by default, is responsible for this behavior. If you prefer to fetch translations from local files on start, set `download_on_start` to `false`.
 
-
 ### Pluralization
 
 Yata Pluralization is useful when you want your application to customize pluralization rules. The base pluralizer is `Yatapp.Pluralization.Base` which apply rules with three keys: :zero, :one and :other. You can create your own and set it as your default pluralizer (see Yatapp.Pluralization.Example). To set new pluralizer change configuration settings:
@@ -141,6 +143,7 @@ Yatapp.translate("en", "messages", %{count: 2}) #=> "no messages"
 ### Configure http timeouts
 
 Http timeout options:
+
 - `:timeout` - timeout for establishing a TCP or SSL connection, in milliseconds. Default is 8000
 - `:recv_timeout` - timeout for receiving an HTTP response from the socket. Default is 5000
 
@@ -164,24 +167,24 @@ There're two parsers `json_parser` and `translation_file_parser`. `json_parser` 
 
 ### Configuration Parameters
 
-| Option | Description | Default | Websocket | API |
-| :--    | :--         | :--:    | :--:      | :--: |
-| api_key | Organization Settings > Security > API token | | required | required |
-| project_id | Organization Settings > Security > Projects > Id | | required | required |
-| default_locale | Default locale in your application. | `"en"` | optional | - |
-| locales | Supported locales. | `["en"]` | optional | optional |
-| otp_app | Used to generate proper path to locale files | | - | - |
-| store | Module that implements `Yatapp.Store` | `Yatapp.Store.ETS` | - | - |
-| download_on_start | Download all translations when app starts | `true` | - | - |
-| json_parser | JSON parser that will be used to parse response from API | `Jason` | - | required |
-| fallback | Fallback to default locale if translation empty. | `false` | optional | - |
-| translations_format | Format you wish to get files in, available for now are (yml, js, json, properties, xml, xml_escaped, xml_android_resource, strings, plist) | `"yml"` | - | optional |
-| translation_file_parser | Parser that will parse downloaded files | | - | optional |
-| save_to_path | A directory where translations will be saved. | `"priv/locales/"` | - | optional |
-| root | Download with language as a root element of the translation | `false` | - | optional |
-| strip_empty | Generate only keys that have text and skip empty ones | `false` | - | optional |
-| enable_websocket | Enable websocket integration | `false` | required | optional |
-| var_prefix | Prefix to values in translations. | `%{` | optional | optional |
-| var_suffix | Suffix for values in translations. | `}` | optional | optional |
-| pluralizer | Pluralizer that will be used to parse plural forms | `Yatapp.Pluralization.Base` | - | - |
-| http | Set HTTPoison timeouts: `timeout` and `recv_timeout` | `8000 and 5000 miliseconds` | optional | optional |
+| Option                  | Description                                                                                                                                |           Default           | Websocket |   API    |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------: | :-------: | :------: |
+| api_key                 | Organization Settings > Security > API token                                                                                               |                             | required  | required |
+| project_id              | Organization Settings > Security > Projects > Id                                                                                           |                             | required  | required |
+| default_locale          | Default locale in your application.                                                                                                        |           `"en"`            | optional  |    -     |
+| locales                 | Supported locales.                                                                                                                         |          `["en"]`           | optional  | optional |
+| otp_app                 | Used to generate proper path to locale files                                                                                               |                             |     -     |    -     |
+| store                   | Module that implements `Yatapp.Store`                                                                                                      |     `Yatapp.Store.ETS`      |     -     |    -     |
+| download_on_start       | Download all translations when app starts                                                                                                  |           `true`            |     -     |    -     |
+| json_parser             | JSON parser that will be used to parse response from API                                                                                   |           `Jason`           |     -     | required |
+| fallback                | Fallback to default locale if translation empty.                                                                                           |           `false`           | optional  |    -     |
+| translations_format     | Format you wish to get files in, available for now are (yml, js, json, properties, xml, xml_escaped, xml_android_resource, strings, plist) |           `"yml"`           |     -     | optional |
+| translation_file_parser | Parser that will parse downloaded files                                                                                                    |                             |     -     | optional |
+| save_to_path            | A directory where translations will be saved.                                                                                              |      `"priv/locales/"`      |     -     | optional |
+| root                    | Download with language as a root element of the translation                                                                                |           `false`           |     -     | optional |
+| strip_empty             | Generate only keys that have text and skip empty ones                                                                                      |           `false`           |     -     | optional |
+| enable_websocket        | Enable websocket integration                                                                                                               |           `false`           | required  | optional |
+| var_prefix              | Prefix to values in translations.                                                                                                          |            `%{`             | optional  | optional |
+| var_suffix              | Suffix for values in translations.                                                                                                         |             `}`             | optional  | optional |
+| pluralizer              | Pluralizer that will be used to parse plural forms                                                                                         | `Yatapp.Pluralization.Base` |     -     |    -     |
+| http                    | Set HTTPoison timeouts: `timeout` and `recv_timeout`                                                                                       | `8000 and 5000 miliseconds` | optional  | optional |

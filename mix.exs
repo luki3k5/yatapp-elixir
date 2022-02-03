@@ -4,8 +4,8 @@ defmodule Yatapp.MixProject do
   def project do
     [
       app: :yatapp,
-      version: "0.2.6",
-      elixir: "~> 1.6",
+      version: "0.3.0",
+      elixir: "~> 1.12.2",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -42,7 +42,7 @@ defmodule Yatapp.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_gen_socket_client, "~> 2.1.1"},
+      {:phoenix_gen_socket_client, "~> 4.0.0"},
       {:websocket_client, "~> 1.3"},
       {:httpoison, "~> 1.4"},
       {:jason, ">= 1.0.0", only: [:dev, :test]},
@@ -55,7 +55,7 @@ defmodule Yatapp.MixProject do
   defp package do
     [
       files: ["lib", "config", "mix.exs", "README.md", "LICENSE.md"],
-      maintainers: ["Katarzyna Kobierska", "Łukasz Łażewski"],
+      maintainers: ["Łukasz Łażewski"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/LLInformatics/yatapp-elixir"}
     ]
