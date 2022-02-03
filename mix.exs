@@ -46,7 +46,7 @@ defmodule Yatapp.MixProject do
       {:websocket_client, "~> 1.3"},
       {:httpoison, "~> 1.4"},
       {:jason, ">= 1.0.0", only: [:dev, :test]},
-      {:ex_doc, "~> 0.19.1", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.24.2", only: :dev, runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mock, "~> 0.3.3", only: :test}
     ]
