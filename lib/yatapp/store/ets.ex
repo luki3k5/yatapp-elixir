@@ -22,8 +22,12 @@ defmodule Yatapp.Store.ETS do
   @impl Yatapp.Store
   def get(key) do
     case :ets.lookup(@table, key) do
-      [{^key, translation}] -> translation
-      [] -> raise ArgumentError, "Missing translation for key: #{key}"
+      [{^key, translation}] ->
+        translation
+
+      [] ->
+        GenServer.cast(Yatapp.TranslationsSynchronizer, :synchronize)
+        raise ArgumentError, "Missing translation for key: #{key}"
     end
   end
 
