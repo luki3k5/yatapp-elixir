@@ -15,7 +15,7 @@ defmodule Yatapp.TranslationsSynchronizer do
 
   def handle_cast(:synchronize, %{last_time_translations_fetched: nil}) do
     fetch_translations()
-    {:noreply, %{last_time_translations_fetched: DateTime.utc_now()}} |> IO.inspect()
+    {:noreply, %{last_time_translations_fetched: DateTime.utc_now()}}
   end
 
   def handle_cast(:synchronize, state) do
