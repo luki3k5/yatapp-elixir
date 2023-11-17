@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/elixir:1.9.1
+      - image: circleci/elixir:1.12.2
         environment:
           MIX_ENV: test
           YATA_API_KEY: "api_key"

@@ -19,9 +19,9 @@ defmodule Yatapp.Supervisor do
 
     children =
       if Config.get(:enable_websocket) do
-        [worker(Yatapp.Socket, [])]
+        [worker(Yatapp.Socket, []), worker(Yatapp.TranslationsSynchronizer, [])]
       else
-        []
+        [worker(Yatapp.TranslationsSynchronizer, [])]
       end
 
     supervise(children, strategy: :one_for_one)
