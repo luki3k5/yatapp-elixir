@@ -43,3 +43,4 @@ defmodule Yatapp.Store.ETS do
     :ok
   end
 end
+
